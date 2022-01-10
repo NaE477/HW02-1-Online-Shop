@@ -1,0 +1,225 @@
+<html>
+<head>
+<title>Cart.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Cart.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.w4</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Arrays</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Locale</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">java.lang.Thread.sleep</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Cart {</span>
+    <span class="s0">private </span><span class="s1">String[] item = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] category = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private int</span><span class="s1">[] qty = </span><span class="s0">new int</span><span class="s1">[</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private int</span><span class="s1">[] price = </span><span class="s0">new int</span><span class="s1">[</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">;</span>
+
+    <span class="s0">public boolean </span><span class="s1">checkIfCartIsNotEmpty(){</span>
+        <span class="s0">boolean </span><span class="s1">flag = </span><span class="s0">false;</span>
+        <span class="s0">for </span><span class="s1">(String i : item) {</span>
+            <span class="s0">if </span><span class="s1">(i != </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s1">flag = </span><span class="s0">true;</span>
+                <span class="s0">break;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">flag</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">viewCart() </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; </span><span class="s0">this</span><span class="s1">.getItem().length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if</span><span class="s1">(getItem()[i] != </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s1">Main.colorSelector(</span><span class="s0">this</span><span class="s1">.getCategory()[i]</span><span class="s0">, </span><span class="s1">getItemDetails(i))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Total Price: &quot; </span><span class="s1">+ totalPrice() + </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getItemDetails(</span><span class="s0">int </span><span class="s1">index){</span>
+        <span class="s0">return </span><span class="s3">&quot;Item&quot; </span><span class="s1">+ (index + </span><span class="s2">1</span><span class="s1">) + </span><span class="s3">&quot;-&quot; </span><span class="s1">+ getItem()[index] + </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+                <span class="s3">&quot;Price: &quot; </span><span class="s1">+ getPrice()[index] + </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+</span>
+                <span class="s3">&quot;Quantity: &quot; </span><span class="s1">+ getQty()[index]</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">totalPrice(){</span>
+        <span class="s0">int </span><span class="s1">sum = </span><span class="s2">0</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; item.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s1">sum = sum + qty[i] * price[i]</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">sum</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">addToCart(String item</span><span class="s0">,</span><span class="s1">String category</span><span class="s0">, int </span><span class="s1">price</span><span class="s0">,</span><span class="s1">Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">itemIndex = warehouse.searchByItem(item)</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">warehouseQty = warehouse.getQuantity()[itemIndex]</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(!checkIfCartIsFull()) {</span>
+            <span class="s0">if </span><span class="s1">(!checkIfItemExistsInCart(item)) {</span>
+                <span class="s0">if </span><span class="s1">(warehouse.checkItemAvailability(item)) {</span>
+                    <span class="s1">askForQuantityMessage(item</span><span class="s0">,</span><span class="s1">warehouseQty)</span><span class="s0">;</span>
+                    <span class="s0">int </span><span class="s1">orderQty = Integer.parseInt(scanner.nextLine())</span><span class="s0">;</span>
+                    <span class="s0">if </span><span class="s1">(orderQty &gt; warehouseQty) {</span>
+                        <span class="s1">System.out.println(</span><span class="s3">&quot;Not enough item in Stock!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                    <span class="s0">else </span><span class="s1">{</span>
+                        <span class="s1">i++</span><span class="s0">;</span>
+                        <span class="s0">if </span><span class="s1">(i &gt; </span><span class="s2">5</span><span class="s1">) {</span>
+                            <span class="s1">i = </span><span class="s2">1</span><span class="s0">;</span>
+                        <span class="s1">}</span>
+                        <span class="s1">initializeCart(item</span><span class="s0">, </span><span class="s1">category</span><span class="s0">, </span><span class="s1">orderQty</span><span class="s0">, </span><span class="s1">price)</span><span class="s0">;</span>
+                        <span class="s1">warehouse.setQuantity(item</span><span class="s0">, </span><span class="s1">warehouse.getQuantity()[itemIndex] - orderQty)</span><span class="s0">;</span>
+                        <span class="s1">itemAddedMessage(item</span><span class="s0">,</span><span class="s1">orderQty)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                    <span class="s1">Main.shop(</span><span class="s0">this, </span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">else if</span><span class="s1">(!warehouse.checkItemAvailability(item)){</span>
+                    <span class="s1">itemDoesNotExistMessage()</span><span class="s0">;</span>
+                    <span class="s1">Main.shop(</span><span class="s0">this,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(checkIfItemExistsInCart(item)) {</span>
+                <span class="s1">askForQuantityMessage(item</span><span class="s0">,</span><span class="s1">warehouseQty)</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">orderQty = Integer.parseInt(scanner.nextLine())</span><span class="s0">;</span>
+                <span class="s0">if </span><span class="s1">(warehouse.checkItemAvailability(item)) {</span>
+                    <span class="s0">int </span><span class="s1">searchedItem = searchByItem(item)</span><span class="s0">;</span>
+                    <span class="s0">this</span><span class="s1">.qty[searchedItem] += orderQty</span><span class="s0">;</span>
+                    <span class="s1">warehouse.setQuantity(item</span><span class="s0">, </span><span class="s1">warehouse.getQuantity()[warehouse.searchByItem(item)] - warehouseQty)</span><span class="s0">;</span>
+                    <span class="s1">itemAddedMessage(item</span><span class="s0">, </span><span class="s1">orderQty)</span><span class="s0">;</span>
+                    <span class="s1">Main.shop(</span><span class="s0">this, </span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">else if </span><span class="s1">(!warehouse.checkItemAvailability(item)) {</span>
+                    <span class="s1">itemDoesNotExistMessage()</span><span class="s0">;</span>
+                    <span class="s1">Main.shop(</span><span class="s0">this,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">System.out.println(</span><span class="s3">&quot;Your cart limit is 5 and it's full! you will now be redirected to your shopping cart.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">sleep(</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Main.manageCart(</span><span class="s0">this, </span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">finalizeOrder(Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Pay for order by Y/y or cancel payment by N/n:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String option = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(option.toUpperCase(Locale.ROOT).equals(</span><span class="s3">&quot;Y&quot;</span><span class="s1">)){</span>
+            <span class="s1">Arrays.fill(</span><span class="s0">this</span><span class="s1">.item</span><span class="s0">,null</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Arrays.fill(</span><span class="s0">this</span><span class="s1">.category</span><span class="s0">,null</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Arrays.fill(</span><span class="s0">this</span><span class="s1">.qty</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Arrays.fill(</span><span class="s0">this</span><span class="s1">.price</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">i = </span><span class="s2">0</span><span class="s0">;</span>
+            <span class="s1">System.out.println(</span><span class="s3">&quot;Your order was finalized! You will be redirected to The Mock online shop now!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">sleep(</span><span class="s2">900</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Main.showList(</span><span class="s0">this,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else if</span><span class="s1">(option.toUpperCase(Locale.ROOT).equals(</span><span class="s3">&quot;N&quot;</span><span class="s1">)){</span>
+            <span class="s1">System.out.println(</span><span class="s3">&quot;Finalization canceled. You will now be redirected to your Cart&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">sleep(</span><span class="s2">900</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Main.manageCart(</span><span class="s0">this,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">deleteFromCart(Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Please choose the number of the item you want to delete:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">viewCart()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">option = Integer.parseInt(scanner. nextLine())</span><span class="s0">;</span>
+        <span class="s1">String optionItem = getItem()[option - </span><span class="s2">1</span><span class="s1">]</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">tempQty = getQty()[option - </span><span class="s2">1</span><span class="s1">]</span><span class="s0">;</span>
+        <span class="s1">emptyCart(option - </span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(tempQty + </span><span class="s3">&quot;x &quot; </span><span class="s1">+ optionItem + </span><span class="s3">&quot; were removed from your cart.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">sleep(</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.setQuantity(optionItem</span><span class="s0">,</span><span class="s1">warehouse.getQuantity()[warehouse.searchByItem(optionItem)] + tempQty)</span><span class="s0">;</span>
+        <span class="s1">Main.manageCart(</span><span class="s0">this,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">initializeCart(String item</span><span class="s0">,</span><span class="s1">String category</span><span class="s0">,int </span><span class="s1">qty</span><span class="s0">,int </span><span class="s1">price){</span>
+        <span class="s0">this</span><span class="s1">.item[i - </span><span class="s2">1</span><span class="s1">] = item</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.category[i - </span><span class="s2">1</span><span class="s1">] = category</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.qty[i - </span><span class="s2">1</span><span class="s1">] = qty</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.price[i - </span><span class="s2">1</span><span class="s1">] = price</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">emptyCart(</span><span class="s0">int </span><span class="s1">input){</span>
+        <span class="s1">getItem()[input] = </span><span class="s0">null;</span>
+        <span class="s1">getPrice()[input] = </span><span class="s2">0</span><span class="s0">;</span>
+        <span class="s1">getQty()[input] = </span><span class="s2">0</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">checkIfCartIsFull(){</span>
+        <span class="s0">boolean </span><span class="s1">flag = </span><span class="s0">false;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; </span><span class="s0">this</span><span class="s1">.item.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s1">flag = getItem()[i] != </span><span class="s0">null;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">flag</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">askForQuantityMessage(String item</span><span class="s0">,int </span><span class="s1">quantity){</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;How Many &quot; </span><span class="s1">+ item + </span><span class="s3">&quot;s?&quot; </span><span class="s1">+ </span><span class="s3">&quot;(In Stock:&quot; </span><span class="s1">+ quantity + </span><span class="s3">&quot;)&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">itemAddedMessage(String item</span><span class="s0">,int </span><span class="s1">quantity){</span>
+        <span class="s1">System.out.println(quantity + </span><span class="s3">&quot;x&quot; </span><span class="s1">+ item + </span><span class="s3">&quot;s were added to the Cart&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">itemDoesNotExistMessage(){</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Item does not exist in the Warehouse. No Item was added to the cart&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">checkIfItemExistsInCart(String item){</span>
+        <span class="s0">boolean </span><span class="s1">flag = </span><span class="s0">false;</span>
+        <span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; </span><span class="s0">this</span><span class="s1">.item.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if </span><span class="s1">(getItem()[i] != </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.item[i].equals(item)) {</span>
+                    <span class="s1">flag = </span><span class="s0">true;</span>
+                    <span class="s0">break;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">flag</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">searchByItem(String item){</span>
+        <span class="s0">int </span><span class="s1">location = </span><span class="s2">0</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; getItem().length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if</span><span class="s1">(getItem()[i].equals(item)){</span>
+                <span class="s1">location = i</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">location</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String[] getItem() {</span>
+        <span class="s0">return </span><span class="s1">item</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String[] getCategory() {</span>
+        <span class="s0">return </span><span class="s1">category</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int</span><span class="s1">[] getQty() {</span>
+        <span class="s0">return </span><span class="s1">qty</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int</span><span class="s1">[] getPrice() {</span>
+        <span class="s0">return </span><span class="s1">price</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

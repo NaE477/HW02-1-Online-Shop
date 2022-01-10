@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>Users.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+.s4 { color: #629755; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Users.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.w4</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.regex.Pattern</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Users {</span>
+    <span class="s0">private </span><span class="s1">String[] username = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] password = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] firstname = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] lastname = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] phoneNumber = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] emailAddress = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] region = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] city = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] avenue = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] postalCode = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">100</span><span class="s1">]</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">i = </span><span class="s2">1</span><span class="s0">;</span>
+
+
+
+    <span class="s0">public void </span><span class="s1">signUp(){</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Please fill each field and press Enter: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Username: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.username[i] = primaryAdder(</span><span class="s0">this</span><span class="s1">.username)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Password: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.password[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Firstname: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.firstname[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Lastname: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.lastname[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Phone Number: (Example: +989123456789/09123456789)&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.phoneNumber[i] = regexValidatorInitializer(phoneNumberRegexPattern)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Email Address: (Example: ali@hoseini.com)&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.emailAddress[i] = regexValidatorInitializer(emailRegexPattern)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Region: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.region[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;City: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.city[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Avenue: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.avenue[i] = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Postal Code: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.postalCode[i] = scanner.nextLine()</span><span class="s0">;</span>
+
+        <span class="s1">i++</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* Checks if a specific username matches the password in two arraylists of username and password with same size.</span>
+     <span class="s4">*/</span>
+    <span class="s0">public boolean </span><span class="s1">authenticate(String user</span><span class="s0">, </span><span class="s1">String pass){</span>
+        <span class="s0">boolean </span><span class="s1">flag = </span><span class="s0">false;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; username.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if</span><span class="s1">(username[i] != </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s1">String validUser = username[i]</span><span class="s0">;</span>
+                <span class="s1">String validPass = password[i]</span><span class="s0">;</span>
+                <span class="s0">if </span><span class="s1">(validUser.equals(user) &amp;&amp; validPass.equals(pass)) {</span>
+                    <span class="s1">flag = </span><span class="s0">true;</span>
+                    <span class="s0">break;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">flag</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String primaryAdder(String[] target){</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">String input = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">String output = </span><span class="s0">null;</span>
+        <span class="s0">while</span><span class="s1">(</span><span class="s0">true</span><span class="s1">){</span>
+            <span class="s0">if</span><span class="s1">(checkExistence(input</span><span class="s0">,</span><span class="s1">target)){</span>
+                <span class="s1">System.out.println(</span><span class="s3">&quot;This &quot; </span><span class="s1">+ input + </span><span class="s3">&quot; Already Exists! Try another one: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">primaryAdder(target)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">output = input</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">break;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">output</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">checkExistence(String input</span><span class="s0">,</span><span class="s1">String[] target){</span>
+        <span class="s0">boolean </span><span class="s1">flag = </span><span class="s0">false;</span>
+        <span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i &lt; target.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if </span><span class="s1">(target[i] != </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">if </span><span class="s1">(target[i].equals(input)) {</span>
+                    <span class="s1">flag = </span><span class="s0">true;</span>
+                    <span class="s0">break;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">flag</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String regexValidatorInitializer(String[] regex){</span>
+        <span class="s1">String output = </span><span class="s0">null;</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">String input = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">while</span><span class="s1">(</span><span class="s0">true</span><span class="s1">){</span>
+            <span class="s0">if</span><span class="s1">(checkRegex(input</span><span class="s0">,</span><span class="s1">regex[</span><span class="s2">0</span><span class="s1">])){</span>
+                <span class="s1">output = input</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">else</span><span class="s1">{</span>
+                <span class="s1">System.out.println(</span><span class="s3">&quot;Wrong &quot; </span><span class="s1">+ regex[</span><span class="s2">1</span><span class="s1">] + </span><span class="s3">&quot; Format. Enter a Correct &quot; </span><span class="s1">+ regex[</span><span class="s2">1</span><span class="s1">] + </span><span class="s3">&quot; Format:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">regexValidatorInitializer(regex)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">break;</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">output</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public boolean </span><span class="s1">checkRegex(String input</span><span class="s0">, </span><span class="s1">String regexPattern){</span>
+        <span class="s0">return </span><span class="s1">Pattern.compile(regexPattern).matcher(input).matches()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String[] getUsername() {</span>
+        <span class="s0">return </span><span class="s1">username</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String[] getPassword() {</span>
+        <span class="s0">return </span><span class="s1">password</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">String[] emailRegexPattern = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s3">&quot;^(?=.{1,64}@)[A-Za-z0-9_-]+(</span><span class="s0">\\</span><span class="s3">.[A-Za-z0-9_-]+)*@&quot;</span>
+            <span class="s1">+ </span><span class="s3">&quot;[^-][A-Za-z0-9-]+(</span><span class="s0">\\</span><span class="s3">.[A-Za-z0-9-]+)*(</span><span class="s0">\\</span><span class="s3">.[A-Za-z]{2,})$&quot;</span><span class="s0">,</span><span class="s3">&quot;Email&quot;</span><span class="s1">}</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] phoneNumberRegexPattern = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s3">&quot;(</span><span class="s0">\\</span><span class="s3">+989|9|09)(12|19|35|36|37|38|39|32)</span><span class="s0">\\</span><span class="s3">d{7}&quot;</span><span class="s0">,</span><span class="s3">&quot;Phone Number&quot;</span><span class="s1">}</span><span class="s0">;</span>
+
+    <span class="s0">public void </span><span class="s1">defaultInitializer() {</span>
+        <span class="s0">this</span><span class="s1">.username[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;user&quot;</span><span class="s0">;</span>
+        <span class="s1">password[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;pass&quot;</span><span class="s0">;</span>
+        <span class="s1">firstname[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;user&quot;</span><span class="s0">;</span>
+        <span class="s1">lastname[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;admin&quot;</span><span class="s0">;</span>
+        <span class="s1">phoneNumber[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;09356637058&quot;</span><span class="s0">;</span>
+        <span class="s1">emailAddress[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;user@admin.com&quot;</span><span class="s0">;</span>
+        <span class="s1">region[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;Tehran&quot;</span><span class="s0">;</span>
+        <span class="s1">city[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;Tehran&quot;</span><span class="s0">;</span>
+        <span class="s1">avenue[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;Enghelab&quot;</span><span class="s0">;</span>
+        <span class="s1">postalCode[</span><span class="s2">0</span><span class="s1">] = </span><span class="s3">&quot;1111111111&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

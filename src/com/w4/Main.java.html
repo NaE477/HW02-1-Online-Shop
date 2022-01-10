@@ -1,0 +1,198 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #629755; font-style: italic;}
+.s4 { color: #6a8759;}
+.s5 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.w4</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Locale</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">java.lang.Thread.sleep</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Main {</span>
+
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s2">//Mock Database Initialization</span>
+        <span class="s1">Warehouse warehouse = </span><span class="s0">new </span><span class="s1">Warehouse()</span><span class="s0">;</span>
+        <span class="s1">Users users = </span><span class="s0">new </span><span class="s1">Users()</span><span class="s0">;</span>
+        <span class="s1">defaultInitializer(warehouse)</span><span class="s0">;</span>
+        <span class="s1">users.defaultInitializer()</span><span class="s0">;</span>
+        <span class="s1">program(users</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Starts program with an initialized Warehouse obejct and an uninitialized users object and starts login/signup process.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">program(Users users</span><span class="s0">,</span><span class="s1">Warehouse warehouse){</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Press L/l to login or S/s to sign up: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String loginOrSignUp = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s0">if </span><span class="s1">(loginOrSignUp.toUpperCase(Locale.ROOT).equals(</span><span class="s4">&quot;L&quot;</span><span class="s1">)) {</span>
+                <span class="s1">login(users</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(loginOrSignUp.toUpperCase(Locale.ROOT).equals(</span><span class="s4">&quot;S&quot;</span><span class="s1">)) {</span>
+                <span class="s1">signUp(users</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">System.out.println(</span><span class="s4">&quot;Wrong input,try again!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">program(users</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">catch </span><span class="s1">(NullPointerException | InterruptedException e){</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Empty String,try L or S for input!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+    <span class="s3">/**</span>
+     <span class="s3">* Receives username and password and authenticates if they are signed up.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">login(Users user</span><span class="s0">,</span><span class="s1">Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Cart cart = </span><span class="s0">new </span><span class="s1">Cart()</span><span class="s0">;</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Please Enter your Username(default user: user): &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String username = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Please Enter your Password(default pass: pass): &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String password = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(user.authenticate(username</span><span class="s0">,</span><span class="s1">password)){</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Welcome to The Online Shop!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">showList(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else </span><span class="s1">{System.out.println(</span><span class="s4">&quot;Wrong username/password! try again.&quot;</span><span class="s1">)</span><span class="s0">; </span><span class="s1">program(user</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span><span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Creates Users class and initialize with user details.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">signUp(Users user</span><span class="s0">,</span><span class="s1">Warehouse warehouse){</span>
+        <span class="s1">user.signUp()</span><span class="s0">;</span>
+        <span class="s1">program(user</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s3">/**</span>
+     <span class="s3">* Shows two options: Shopping list and User's Cart.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">showList(Cart cart</span><span class="s0">,</span><span class="s1">Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;&quot;&quot; 
+                Choose one of the Options: 
+                1-Shop 
+                2-View Shopping Cart 
+                &quot;&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">String option = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">switch </span><span class="s1">(option) {</span>
+            <span class="s0">case </span><span class="s4">&quot;1&quot; </span><span class="s1">-&gt; shop(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s0">case </span><span class="s4">&quot;2&quot; </span><span class="s1">-&gt; manageCart(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s0">default </span><span class="s1">-&gt; {</span>
+                <span class="s1">System.out.println(</span><span class="s4">&quot;Wrong Option!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">showList(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Shows a menu of the shop items plus exit option and asks for option and then quantity of the item if user haven't chosen to exit.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">shop(Cart cart</span><span class="s0">, </span><span class="s1">Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;Choose one of the items:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">sleep(</span><span class="s5">400</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.viewWarehouse()</span><span class="s0">;</span>
+        <span class="s1">System.out.println((warehouse.getItem().length + </span><span class="s5">1</span><span class="s1">) + </span><span class="s4">&quot;-Exit Shopping List&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">System.out.println()</span><span class="s0">;</span>
+        <span class="s1">String option = scanner.nextLine()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">itemIndex = Integer.parseInt(option) - </span><span class="s5">1</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(itemIndex &gt;= </span><span class="s5">0 </span><span class="s1">&amp;&amp; itemIndex &lt; warehouse.getItem().length) {</span>
+            <span class="s1">cart.addToCart(warehouse.getItem()[itemIndex]</span><span class="s0">,</span><span class="s1">warehouse.getCategory()[itemIndex]</span><span class="s0">,</span><span class="s1">warehouse.getPrice()[itemIndex]</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else if </span><span class="s1">(Integer.parseInt(option) == warehouse.getItem().length + </span><span class="s5">1</span><span class="s1">) {</span>
+            <span class="s1">showList(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Wrong Option,Choose another one!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">shop(cart</span><span class="s0">, </span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">manageCart(Cart cart</span><span class="s0">, </span><span class="s1">Warehouse warehouse) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s0">if</span><span class="s1">(cart.checkIfCartIsNotEmpty()) {</span>
+            <span class="s1">Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+            <span class="s1">cart.viewCart()</span><span class="s0">;</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Enter D/d for deleting an item,Enter F/f for finalizing order or Enter B/b to go back to the Shop&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">String option = scanner.nextLine()</span><span class="s0">;</span>
+            <span class="s0">switch </span><span class="s1">(option.toUpperCase(Locale.ROOT)) {</span>
+                <span class="s0">case </span><span class="s4">&quot;D&quot; </span><span class="s1">-&gt; cart.deleteFromCart(warehouse)</span><span class="s0">;</span>
+                <span class="s0">case </span><span class="s4">&quot;F&quot; </span><span class="s1">-&gt; cart.finalizeOrder(warehouse)</span><span class="s0">;</span>
+                <span class="s0">case </span><span class="s4">&quot;B&quot; </span><span class="s1">-&gt; showList(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s0">default </span><span class="s1">-&gt; {</span>
+                    <span class="s1">System.out.println(</span><span class="s4">&quot;Wrong input,Try D,F,B.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">manageCart(cart</span><span class="s0">, </span><span class="s1">warehouse)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">else if</span><span class="s1">(!cart.checkIfCartIsNotEmpty()){</span>
+            <span class="s1">System.out.println(</span><span class="s4">&quot;Your Cart is empty,You will be redirected to the Menu.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">sleep(</span><span class="s5">650</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">showList(cart</span><span class="s0">,</span><span class="s1">warehouse)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">static void </span><span class="s1">defaultInitializer(Warehouse warehouse){</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;Radio&quot;</span><span class="s0">,</span><span class="s4">&quot;Electronics&quot;</span><span class="s0">,</span><span class="s5">100000</span><span class="s0">,</span><span class="s4">&quot;Plays Sounds&quot;</span><span class="s0">,</span><span class="s5">10</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;TV&quot;</span><span class="s0">,</span><span class="s4">&quot;Electronics&quot;</span><span class="s0">,</span><span class="s5">200000</span><span class="s0">,</span><span class="s4">&quot;Shows Pictures&quot;</span><span class="s0">,</span><span class="s5">20</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;Sport Shoe&quot;</span><span class="s0">,</span><span class="s4">&quot;Shoes&quot;</span><span class="s0">,</span><span class="s5">20000</span><span class="s0">,</span><span class="s4">&quot;It's the nicest Shoe!&quot;</span><span class="s0">,</span><span class="s5">40</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;Formal Shoe&quot;</span><span class="s0">,</span><span class="s4">&quot;Shoes&quot;</span><span class="s0">,</span><span class="s5">70000</span><span class="s0">,</span><span class="s4">&quot;It's the most uncomfortable shoe!&quot;</span><span class="s0">,</span><span class="s5">30</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;Book&quot;</span><span class="s0">,</span><span class="s4">&quot;Reading&quot;</span><span class="s0">,</span><span class="s5">12000</span><span class="s0">,</span><span class="s4">&quot;You can read this!&quot;</span><span class="s0">,</span><span class="s5">50</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">warehouse.addItem(</span><span class="s4">&quot;Newspaper&quot;</span><span class="s0">,</span><span class="s4">&quot;Reading&quot;</span><span class="s0">,</span><span class="s5">6000</span><span class="s0">,</span><span class="s4">&quot;You can read and watch this!&quot;</span><span class="s0">,</span><span class="s5">150</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">static void </span><span class="s1">colorSelector(String category</span><span class="s0">,</span><span class="s1">String item) </span><span class="s0">throws </span><span class="s1">InterruptedException {</span>
+        <span class="s0">switch </span><span class="s1">(category) {</span>
+            <span class="s0">case </span><span class="s4">&quot;Electronics&quot; </span><span class="s1">-&gt; {</span>
+                <span class="s1">printRed(item)</span><span class="s0">;</span>
+                <span class="s1">sleep(</span><span class="s5">500</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">case </span><span class="s4">&quot;Reading&quot; </span><span class="s1">-&gt; {</span>
+                <span class="s1">printGreen(item)</span><span class="s0">;</span>
+                <span class="s1">sleep(</span><span class="s5">500</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">case </span><span class="s4">&quot;Shoes&quot; </span><span class="s1">-&gt; {</span>
+                <span class="s1">printYellow(item)</span><span class="s0">;</span>
+                <span class="s1">sleep(</span><span class="s5">500</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">static void </span><span class="s1">printRed(String input){</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;------------------------------</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+ ANSI_RED + input + ANSI_RESET)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">static void </span><span class="s1">printGreen(String input){</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;------------------------------</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+ ANSI_GREEN + input + ANSI_RESET)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">static void </span><span class="s1">printYellow(String input){</span>
+        <span class="s1">System.out.println(</span><span class="s4">&quot;------------------------------</span><span class="s0">\n</span><span class="s4">&quot; </span><span class="s1">+ ANSI_YELLOW + input + ANSI_RESET)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static final </span><span class="s1">String ANSI_RESET =     </span><span class="s4">&quot;</span><span class="s0">\u001B</span><span class="s4">[0m&quot;</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String ANSI_RED =       </span><span class="s4">&quot;</span><span class="s0">\u001B</span><span class="s4">[31m&quot;</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String ANSI_GREEN =     </span><span class="s4">&quot;</span><span class="s0">\u001B</span><span class="s4">[32m&quot;</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String ANSI_YELLOW =    </span><span class="s4">&quot;</span><span class="s0">\u001B</span><span class="s4">[33m&quot;</span><span class="s0">;</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
